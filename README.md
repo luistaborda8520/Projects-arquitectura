@@ -11,7 +11,7 @@ Guardar la orden.
 Enviar notificación al cliente.
 
 Se presentan dos versiones del sistema:
-e-commerceSystem.java → Diseño incorrecto.
+legacySystem.java → Diseño incorrecto.
 RefactoredSystem.java → Diseño refactorizado aplicando SRP + Creator (GRASP).
 
 Descripción del problema de diseño inicial
