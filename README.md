@@ -1,9 +1,9 @@
-Principios de Diseño Aplicados – Creator (GRASP) + SRP
+# Principios de Diseño Aplicados – Creator (GRASP) + SRP
 
 Dominio elegido
 Sistema de procesamiento y aprobación de pedidos en un contexto tipo e-commerce.
 
-El sistema permite:
+## El sistema permite:
 
 Agregar productos a una orden.
 Procesar el pago.
@@ -14,7 +14,7 @@ Se presentan dos versiones del sistema:
 legacySystem.java → Diseño incorrecto.
 RefactoredSystem.java → Diseño refactorizado aplicando SRP + Creator (GRASP).
 
-Descripción del problema de diseño inicial
+## Descripción del problema de diseño inicial
 En la versión Legacy, la clase Order concentra múltiples responsabilidades:
 Cálculo del total.
 Procesamiento de pagos.
@@ -30,14 +30,14 @@ Código difícil de testear.
 Dependencia directa de infraestructura.
 Clase tipo “God Class”.
 
-Ejemplo de problemas concretos:
+## Ejemplo de problemas concretos:
 Si cambia la base de datos → se modifica Order.
 Si cambia el proveedor de pagos → se modifica Order.
 Si cambia el sistema de correo → se modifica Order.
 
 Una sola clase tiene múltiples razones para cambiar.
 
-Principios aplicados
+## Principios aplicados
 SRP (Single Responsibility Principle)
 
 Una clase debe tener una sola razón para cambiar.
@@ -57,7 +57,7 @@ Los contiene o agrega.
 Tiene los datos necesarios.
 Es responsable del ciclo de vida.
 
-Aplicación en el sistema:
+## Aplicación en el sistema:
 
 Order crea OrderItem porque:
 Los contiene.
@@ -103,7 +103,7 @@ Polimorfismo.
 Bajo acoplamiento.
 Mayor extensibilidad.
 
-Costos reales:
+## Costos reales
 Más clases.
 Mayor estructura inicial.
 Más archivos en un proyecto real.
@@ -113,7 +113,7 @@ Cambios localizados.
 Mayor claridad conceptual.
 Más alineado con arquitectura limpia.
 
-Conclusión
+## Conclusión
 La refactorización demuestra cómo aplicar correctamente:
 SRP para aislar responsabilidades.
 Creator (GRASP) para asignar correctamente la creación de objetos.
