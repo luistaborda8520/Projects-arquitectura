@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
  
 /**
-* ❌ ESTADO: LEGACY / "CÓDIGO ESPAGUETI"
+* ❌ ESTADO: LEGACY 
 * Este archivo simula un sistema monolítico donde todo está acoplado.
 */
  
