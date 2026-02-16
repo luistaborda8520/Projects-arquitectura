@@ -6,8 +6,6 @@ import java.util.Map;
 /**
 * ❌ ESTADO: LEGACY / "CÓDIGO ESPAGUETI"
 * Este archivo simula un sistema monolítico donde todo está acoplado.
-* * INSTRUCCIONES:
-* Copia este contenido en un archivo llamado 'LegacySystem.java' y ejecútalo.
 */
  
 // --- SIMULACIÓN DE LIBRERÍAS EXTERNAS (Drivers, SDKs) ---
