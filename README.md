@@ -1,45 +1,28 @@
 # Principios de Diseño Aplicados – Creator (GRASP) + SRP
 
-Dominio elegido
-Sistema de procesamiento y aprobación de pedidos en un contexto tipo e-commerce.
+## Dominio
+Sistema de procesamiento de pedidos en un contexto **e-commerce**.
 
-## El sistema permite:
+El sistema permite:
+- Agregar productos a una orden.
+- Procesar pagos.
+- Guardar la orden.
+- Enviar notificaciones al cliente.
 
-Agregar productos a una orden.
-Procesar el pago.
-Guardar la orden.
-Enviar notificación al cliente.
+El repositorio incluye:
+- `legacySystem.java` → Diseño con problemas de arquitectura.
+- `RefactoredSystem.java` → Diseño refactorizado aplicando SRP y Creator (GRASP).
 
-Se presentan dos versiones del sistema:
-legacySystem.java → Diseño incorrecto.
-RefactoredSystem.java → Diseño refactorizado aplicando SRP + Creator (GRASP).
+---
 
 ## Descripción del problema de diseño inicial
-En la versión Legacy, la clase Order concentra múltiples responsabilidades:
-Cálculo del total.
-Procesamiento de pagos.
-Persistencia en base de datos.
-Envío de correos.
+En la versión Legacy, la clase Order concentra lógica de negocio, pagos, persistencia y envío de correos, además de crear directamente dependencias externas.
+Esto provoca violaciones de SRP y Creator (GRASP), alto acoplamiento, baja testabilidad y una clase tipo God Class.
 
-Creación directa de dependencias externas.
-Problemas identificados:
-Violación de SRP (múltiples razones de cambio).
-Violación de Creator (GRASP).
-Alto acoplamiento.
-Código difícil de testear.
-Dependencia directa de infraestructura.
-Clase tipo “God Class”.
-
-## Ejemplo de problemas concretos:
-Si cambia la base de datos → se modifica Order.
-Si cambia el proveedor de pagos → se modifica Order.
-Si cambia el sistema de correo → se modifica Order.
-
-Una sola clase tiene múltiples razones para cambiar.
+Como resultado, cualquier cambio en la base de datos, el proveedor de pagos o el sistema de correos obliga a modificar Order, ya que tiene múltiples razones para cambiar.
 
 ## Principios aplicados
-SRP (Single Responsibility Principle)
-
+**SRP (Single Responsibility Principle)**
 Una clase debe tener una sola razón para cambiar.
 
 En la versión refactorizada:
@@ -51,63 +34,24 @@ NotificationService → Envía notificaciones.
 OrderRepository → Guarda en base de datos.
 
 Cada clase tiene una responsabilidad clara y aislada.
-Creator (GRASP)
-El principio Creator establece que una clase debe crear objetos cuando:
-Los contiene o agrega.
-Tiene los datos necesarios.
-Es responsable del ciclo de vida.
 
-## Aplicación en el sistema:
+**Creator (GRASP)** Se aplicó asignando la creación de objetos a la clase con mayor relación.
+Order crea OrderItem porque los contiene y controla su ciclo de vida, aumentando la cohesión.
+Las dependencias de OrderService no se crean internamente, sino que se reciben por constructor.
 
-Order crea OrderItem porque:
-Los contiene.
-Controla su ciclo de vida.
-Posee la información necesaria.
-Esto aumenta cohesión y reduce acoplamiento innecesario.
+## Decisiones de diseño relevantes y justificación
+El sistema se organizó mediante separación por capas (dominio, servicios, infraestructura y composition root), lo que mejora la mantenibilidad, testabilidad y extensibilidad.
 
-Además:
-OrderService no crea sus dependencias.
-Las recibe por constructor (inyección).
-La creación ocurre en el main (Composition Root).
+Se utilizó inyección de dependencias en lugar de creación directa de objetos, permitiendo cambiar implementaciones sin modificar la lógica principal.
 
-Decisiones de diseño relevantes y justificación
-Separación por capas
+Además, se definieron interfaces para los servicios clave, promoviendo bajo acoplamiento, polimorfismo y mayor flexibilidad en el diseño.
 
-El sistema fue dividido en:
-Dominio
-Interfaces (contratos)
-Infraestructura
-Servicio de aplicación
-Composition Root (main)
-
-Esto mejora:
-Mantenibilidad
-Testabilidad
-Extensibilidad
-Inyección de dependencias
-
-En lugar de crear dependencias dentro de la clase:
-this.payment = new StripeSDK();
-
-Ahora se inyectan:
-public OrderService(PaymentProcessor paymentProcessor, ...)
-Esto permite cambiar implementaciones sin modificar la lógica principal.
-
-Uso de interfaces
-Se definieron contratos:
-PaymentProcessor
-NotificationService
-OrderRepository
-Permitiendo:
-Polimorfismo.
-Bajo acoplamiento.
-Mayor extensibilidad.
-
-## Costos reales
+**Costos reales:**
 Más clases.
 Mayor estructura inicial.
 Más archivos en un proyecto real.
-Beneficios:
+
+**Beneficios**:
 Mejor organización.
 Cambios localizados.
 Mayor claridad conceptual.
